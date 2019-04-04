@@ -15,6 +15,7 @@ class LineGraph : Window {
         this.data = numbers;
         this.find_min_max();
         this.setup_drawing_area();
+        this.set_size_request(500, 300);
     }
 
     public void redraw() {
