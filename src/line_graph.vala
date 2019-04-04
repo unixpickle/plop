@@ -19,6 +19,7 @@ class LineGraph : Window {
         this.setup_axis_labels();
         this.setup_drawing_area();
         this.setup_css();
+        this.setup_keyboard_events();
         this.set_size_request(500, 300);
         this.add(container);
     }
@@ -110,6 +111,17 @@ class LineGraph : Window {
         var display = Gdk.Display.get_default();
         var screen = display.get_default_screen();
         StyleContext.add_provider_for_screen(screen, css, 600);
+    }
+
+    private void setup_keyboard_events() {
+        this.key_press_event.connect((event) => {
+            var mask = accelerator_get_default_mod_mask();
+            if (event.keyval == Gdk.Key.w &&
+                (event.state & mask) == Gdk.ModifierType.CONTROL_MASK) {
+                this.close();
+            }
+            return false;
+        });
     }
 
     private void get_points(out double[] x, out double[] y) {

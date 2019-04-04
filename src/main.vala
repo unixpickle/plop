@@ -36,6 +36,7 @@ public int main(string[] args) {
     var window = new LineGraph(numbers);
     window.smoothing = smooth;
     window.show_all();
+    window.destroy.connect(Gtk.main_quit);
     Gtk.main();
     return 0;
 }
