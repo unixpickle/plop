@@ -3,6 +3,7 @@ using Gtk;
 class LineGraph : Window {
     private static int PADDING = 5;
 
+    private Box container;
     private DrawingArea drawing_area;
 
     private double[] data;
@@ -13,9 +14,13 @@ class LineGraph : Window {
 
     public LineGraph(double[] numbers) {
         this.data = numbers;
+        this.container = new Box(Orientation.HORIZONTAL, 0);
         this.find_min_max();
+        this.setup_axis_labels();
         this.setup_drawing_area();
+        this.setup_css();
         this.set_size_request(500, 300);
+        this.add(container);
     }
 
     public void redraw() {
@@ -63,11 +68,17 @@ class LineGraph : Window {
         this.y_max = 1.0;
     }
 
+    private void setup_axis_labels() {
+        var labels = new YLabels(this.y_min, this.y_max);
+        this.container.add(labels);
+    }
+
     private void setup_drawing_area() {
         this.drawing_area = new DrawingArea();
-        this.add(drawing_area);
+        this.drawing_area.expand = true;
+        this.container.add(drawing_area);
         this.drawing_area.draw.connect((ctx) => {
-            ctx.set_source_rgba(1.0, 1.0, 1.0, 1.0);
+            ctx.set_source_rgba(0.0, 0.0, 0.0, 0.0);
             ctx.paint();
 
             double[] x;
@@ -85,6 +96,20 @@ class LineGraph : Window {
 
             return true;
         });
+    }
+
+    private void setup_css() {
+        var css = new CssProvider();
+        try {
+            var data = "GtkLabel, label { padding: 5px; font-size: 16px; }";
+            css.load_from_data(data, data.length);
+        } catch (Error e) {
+            assert(false);
+        }
+
+        var display = Gdk.Display.get_default();
+        var screen = display.get_default_screen();
+        StyleContext.add_provider_for_screen(screen, css, 600);
     }
 
     private void get_points(out double[] x, out double[] y) {
