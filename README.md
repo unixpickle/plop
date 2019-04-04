@@ -26,7 +26,7 @@ Simply pipe numerical data into the plop command, where each line is a y-axis va
 $ cat examples/sin.txt | ./build/plop
 ```
 
-![Sin example](examples/sin.png =500x330)
+<img src="examples/sin.png" width="500">
 
 The plop command can also perform smoothing via an exponential moving average. For example, look at the plot of `examples/noisy_exp.txt`:
 
@@ -34,7 +34,7 @@ The plop command can also perform smoothing via an exponential moving average. F
 $ cat examples/noisy_exp.txt | ./build/plop
 ```
 
-![Noisy exp example](examples/noisy_exp.png =500x330)
+<img src="examples/noisy_exp.png" width="500">
 
 You can smooth this plot out using the `--smooth` option:
 
@@ -42,4 +42,4 @@ You can smooth this plot out using the `--smooth` option:
 cat examples/noisy_exp.txt | ./build/plop --smooth 0.95
 ```
 
-![Smoothed exp example](examples/smooth_exp.png =500x330)
+<img src="examples/smooth_exp.png" width="500">
