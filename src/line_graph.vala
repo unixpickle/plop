@@ -129,9 +129,9 @@ class LineGraph : Window {
         y = new double[this.data.length];
         int width = this.drawing_area.get_allocated_width() - PADDING * 2;
         int height = this.drawing_area.get_allocated_height() - PADDING * 2;
-        double datum = this.data[0];
+        double[] smoothed = smooth_bidir_ema(this.smoothing, this.data);
         for (int i = 0; i < this.data.length; ++i) {
-            datum += (1 - this.smoothing) * (this.data[i] - datum);
+            double datum = smoothed[i];
             x[i] = i * (double)width / (double)(this.data.length - 1);
             y[i] = (datum - this.y_min) / (this.y_max - this.y_min);
             y[i] *= (double)height;
