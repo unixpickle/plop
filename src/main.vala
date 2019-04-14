@@ -1,5 +1,6 @@
 public int main(string[] args) {
     double smooth = 0.0;
+    string title = "";
     var entry = OptionEntry();
     entry.long_name = "smooth";
     entry.short_name = 's';
@@ -9,6 +10,16 @@ public int main(string[] args) {
     entry.description = "smoothing value";
     entry.arg_description = "DOUBLE";
     OptionEntry[] options = {entry};
+    entry = OptionEntry();
+    entry.long_name = "title";
+    entry.short_name = 't';
+    entry.flags = 0;
+    entry.arg = OptionArg.STRING;
+    entry.arg_data = &title;
+    entry.description = "window title";
+    entry.arg_description = "STRING";
+    options += entry;
+
     try {
         var opt_ctx = new OptionContext("plop");
         opt_ctx.set_help_enabled(true);
@@ -35,6 +46,9 @@ public int main(string[] args) {
     }
     var window = new LineGraph(numbers);
     window.smoothing = smooth;
+    if (title.length > 0) {
+        window.title = title;
+    }
     window.show_all();
     window.destroy.connect(Gtk.main_quit);
     Gtk.main();
