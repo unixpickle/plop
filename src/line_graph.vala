@@ -24,10 +24,6 @@ class LineGraph : Window {
         this.add(container);
     }
 
-    public void redraw() {
-        this.drawing_area.queue_draw();
-    }
-
     private void find_min_max() {
         double min = data[0];
         double max = data[0];
