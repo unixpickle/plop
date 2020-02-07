@@ -12,10 +12,10 @@ class LineGraph : Window {
 
     public double smoothing = 0.0;
 
-    public LineGraph(double[] numbers) {
+    public LineGraph(double[] numbers, bool compact) {
         this.data = numbers;
         this.container = new Box(Orientation.HORIZONTAL, 0);
-        this.find_min_max();
+        this.find_min_max(compact);
         this.setup_axis_labels();
         this.setup_drawing_area();
         this.setup_css();
@@ -24,7 +24,7 @@ class LineGraph : Window {
         this.add(container);
     }
 
-    private void find_min_max() {
+    private void find_min_max(bool compact) {
         double min = data[0];
         double max = data[0];
         foreach (double x in data) {
@@ -34,6 +34,12 @@ class LineGraph : Window {
             if (x > max) {
                 max = x;
             }
+        }
+
+        if (compact) {
+            this.y_min = min;
+            this.y_max = max;
+            return;
         }
 
         this.y_min = 0.0;

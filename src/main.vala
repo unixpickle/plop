@@ -1,6 +1,7 @@
 public int main(string[] args) {
     double smooth = 0.0;
     string title = "";
+    bool compact = false;
     var entry = OptionEntry();
     entry.long_name = "smooth";
     entry.short_name = 's';
@@ -18,6 +19,15 @@ public int main(string[] args) {
     entry.arg_data = &title;
     entry.description = "window title";
     entry.arg_description = "STRING";
+    options += entry;
+    entry = OptionEntry();
+    entry.long_name = "compact";
+    entry.short_name = 'c';
+    entry.flags = 0;
+    entry.arg = OptionArg.NONE;
+    entry.arg_data = &compact;
+    entry.description = "tight axis bounds";
+    entry.arg_description = "BOOL";
     options += entry;
 
     try {
@@ -44,7 +54,7 @@ public int main(string[] args) {
         stderr.printf("error: need at least 2 datapoints.\n");
         return 1;
     }
-    var window = new LineGraph(numbers);
+    var window = new LineGraph(numbers, compact);
     window.smoothing = smooth;
     if (title.length > 0) {
         window.title = title;
